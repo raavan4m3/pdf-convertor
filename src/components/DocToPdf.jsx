@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './DocToPdf.css';  // Updated to use DocToPdf.css
 
 const DocToPdf = () => {
   const [file, setFile] = useState(null);
   const [pdfLink, setPdfLink] = useState('');
-  const [pdfBlob, setPdfBlob] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -21,6 +22,7 @@ const DocToPdf = () => {
 
     try {
       console.log('Uploading file...');
+      setIsLoading(true);
       const response = await axios.post('http://localhost:3000/convert', formData, {
         responseType: 'blob',
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -29,9 +31,10 @@ const DocToPdf = () => {
       console.log('File converted successfully');
       const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
       setPdfLink(url);
-      setPdfBlob(response.data);
     } catch (error) {
       console.error('Error converting file:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -42,7 +45,26 @@ const DocToPdf = () => {
       <button onClick={handleUpload} className="bg-blue-500 text-white py-2 px-4 rounded mb-4">
         Convert
       </button>
-      {pdfLink && (
+      {isLoading && (
+        <div className="loading-container mt-4">
+          <div className="circular-text">
+            <span>P</span>
+            <span>r</span>
+            <span>o</span>
+            <span>c</span>
+            <span>e</span>
+            <span>s</span>
+            <span>s</span>
+            <span>i</span>
+            <span>n</span>
+            <span>g</span>
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+          </div>
+        </div>
+      )}
+      {!isLoading && pdfLink && (
         <div>
           <a
             href={pdfLink}
