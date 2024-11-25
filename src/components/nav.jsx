@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Importing icons from react-icons
+import { Link } from 'react-router-dom'; // Importing Link from react-router-dom
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -13,22 +14,22 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center py-3">
         {!isMobile && (
           <div className={`text-rose-950 text-lg font-bold ${isMobile ? "hidden" : "block"} md:block`}>
-            <a href="#home">Logo</a>
+            <Link to="/">Logo</Link>
           </div>
         )}
         <div className={`md:flex ${isMobile ? "block" : "hidden"} md:items-center w-full md:w-auto`}>
           <ul className="md:flex md:space-x-10">
             <li className="text-rose-950 py-2 md:py-0 md:hover:bg-white md:rounded-lg">
-              <a href="#home">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li className="text-rose-950 py-2 md:py-0 md:hover:bg-white md:rounded-lg">
-              <a href="#about">About</a>
+              <Link to="/about">About</Link>
             </li>
             <li className="text-rose-950 py-2 md:py-0 md:hover:bg-white md:rounded-lg">
-              <a href="#services">Services</a>
+              <Link to="/services">Services</Link>
             </li>
             <li className="text-rose-950 py-2 md:py-0 md:hover:bg-white md:rounded-lg">
-              <a href="#contact">Contact</a>
+              <Link to="/contact">Contact</Link>
             </li>
           </ul>
         </div>
